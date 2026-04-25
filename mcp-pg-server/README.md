@@ -67,6 +67,19 @@ To use this MCP server in every Cursor project, add it to your **Global Cursor S
 
 Once added, the database tools will be available in the Cursor Chat and Composer across all your workspaces.
 
+### AI Guidance (.cursorrules)
+
+To give Cursor's AI better context on how to use these tools effectively, you can use the `.cursorrules` file provided in this repository.
+
+*   **Local Project**: Cursor automatically reads the `.cursorrules` file in the root directory.
+*   **Global Guidance**: If you want this guidance across all projects, you can copy the contents of `.cursorrules` into your **Cursor Settings** -> **General** -> **Rules for AI**.
+
+This file provides the AI with "skills" such as:
+- Always exploring the schema with `describe_table` before writing SQL.
+- Using `optimize_query_skill` for performance analysis.
+- Following read-only safety best practices.
+
+
 ## Cursor MCP config example
 
 ```json
