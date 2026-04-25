@@ -50,6 +50,23 @@ Local MCP client mode (SSE):
 python mcp_pg_server.py --transport sse
 ```
 
+## Global Cursor Usage (Across Multiple Workspaces)
+
+To use this MCP server in every Cursor project, add it to your **Global Cursor Settings**:
+
+1.  Open Cursor and go to **Settings** -> **General** -> **MCP**.
+2.  Click **+ Add New MCP Server**.
+3.  **Name**: `postgres-explorer` (or any name you prefer).
+4.  **Type**: `command`.
+5.  **Command**:
+    ```bash
+    python /absolute/path/to/mcp-pg/mcp-pg-server/mcp_pg_server.py --transport stdio
+    ```
+    *(Ensure you use the absolute path to the script and your python interpreter/venv if needed).*
+6.  **Environment Variables**: Add `POSTGRES_DSN` or other credentials as needed.
+
+Once added, the database tools will be available in the Cursor Chat and Composer across all your workspaces.
+
 ## Cursor MCP config example
 
 ```json
