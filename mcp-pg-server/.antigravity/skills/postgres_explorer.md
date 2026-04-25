@@ -1,4 +1,4 @@
-# PostgreSQL Explorer Skill (Local)
+# PostgreSQL Explorer & Optimizer Guide
 
 Use these tools to explore the PostgreSQL database configured for this workspace.
 

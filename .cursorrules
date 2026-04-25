@@ -1,0 +1,15 @@
+# PostgreSQL Explorer Rules
+
+When working with this project, you have access to a PostgreSQL MCP server. Follow these guidelines:
+
+## Core Tools
+- `list_schemas`: Use this to identify available schemas.
+- `list_tables`: Use this to see tables in a schema (default to `public`).
+- `describe_table`: Use this to understand column types and indexes before writing queries.
+- `run_query_limited`: Use this for read-only exploration. It has built-in safety limits and timeouts.
+- `optimize_query_skill`: Use this when asked to improve query performance or analyze execution plans.
+
+## Workflow
+1.  **Explore First**: Always verify the table structure via `describe_table` before proposing or running SQL.
+2.  **Safety**: Only use the provided MCP tools for database interaction.
+3.  **Optimization**: If a query seems slow or the user asks for performance tips, run `optimize_query_skill` to get automated recommendations.
