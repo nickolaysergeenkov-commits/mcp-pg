@@ -1,0 +1,17 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Antigravity / Agentic tools
+.antigravity/
+.gemini/
+
+# Local configuration
+mcp_config.json
+.env
+
+# OS
+.DS_Store

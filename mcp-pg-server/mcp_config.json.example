@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "postgres-explorer": {
+      "command": "python",
+      "args": [
+        "path/to/mcp_pg_server.py",
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        "POSTGRES_DSN": "postgresql://user:password@host:port/dbname"
+      }
+    }
+  }
+}

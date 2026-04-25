@@ -9,7 +9,8 @@ from typing import Any, Dict, List
 import psycopg
 from mcp.server.fastmcp import FastMCP
 
-logging.basicConfig(level=logging.INFO)
+import sys
+logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 logger = logging.getLogger("mcp-pg")
 
 mcp = FastMCP("postgres-explorer")
@@ -376,7 +377,7 @@ def run_query_limited(sql: str, limit: int = 100, timeout_ms: int = 5000) -> Dic
     wrapped_sql = f"SELECT * FROM ({normalized}) AS mcp_preview LIMIT {int(limit)}"
 
     with _connect() as conn, conn.cursor() as cur:
-        cur.execute("SET LOCAL statement_timeout = %s", (int(timeout_ms),))
+        cur.execute("SELECT set_config('statement_timeout', %s, true)", (str(int(timeout_ms)),))
         cur.execute(wrapped_sql)
         rows = cur.fetchall()
         columns = [desc.name for desc in cur.description]
