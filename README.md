@@ -2,6 +2,12 @@
 
 A Model Context Protocol (MCP) server for PostgreSQL exploration and optimization.
 
+## Requirements
+
+- Python 3.10+
+- PostgreSQL database access
+
+
 ## Project Structure
 
 - `mcp-pg-server/`: The core MCP server implementation.

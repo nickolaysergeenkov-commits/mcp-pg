@@ -59,10 +59,16 @@ To use this MCP server in every Cursor project, add it to your **Global Cursor S
 3.  **Name**: `postgres-explorer` (or any name you prefer).
 4.  **Type**: `command`.
 5.  **Command**:
-    ```bash
-    python /absolute/path/to/mcp-pg/mcp-pg-server/mcp_pg_server.py --transport stdio
-    ```
-    *(Ensure you use the absolute path to the script and your python interpreter/venv if needed).*
+    - **Mac/Linux**:
+      ```bash
+      /Users/yourname/path/to/mcp-pg/mcp-pg-server/venv/bin/python /Users/yourname/path/to/mcp-pg/mcp-pg-server/mcp_pg_server.py --transport stdio
+      ```
+    - **Windows**:
+      ```bash
+      C:\Users\yourname\path\to\mcp-pg\mcp-pg-server\venv\Scripts\python.exe C:\Users\yourname\path\to\mcp-pg\mcp-pg-server\mcp_pg_server.py --transport stdio
+      ```
+    *(Note: Using the absolute path to the `python` executable inside your `venv` ensures the correct dependencies are loaded).*
+
 6.  **Environment Variables**: Add `POSTGRES_DSN` or other credentials as needed.
 
 Once added, the database tools will be available in the Cursor Chat and Composer across all your workspaces.
