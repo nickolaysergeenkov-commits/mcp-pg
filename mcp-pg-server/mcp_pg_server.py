@@ -10,10 +10,47 @@ import psycopg
 from mcp.server.fastmcp import FastMCP
 
 import sys
-logging.basicConfig(level=logging.INFO, stream=sys.stderr)
-logger = logging.getLogger("mcp-pg")
 
+# Cursor surfaces everything written to stderr as [error] in the MCP log. The
+# official MCP server logs routine INFO to stderr. FastMCP can also attach
+# handlers or bump levels after import — re-apply in _silence_mcp_info_logs.
+_debug = bool(os.getenv("MCP_PG_DEBUG"))
+
+
+def _silence_mcp_info_logs() -> None:
+    level = logging.DEBUG if _debug else logging.WARNING
+    kwargs = {"level": level, "stream": sys.stderr}
+    if sys.version_info >= (3, 8):
+        kwargs["force"] = True
+    logging.basicConfig(**kwargs)
+    root = logging.getLogger()
+    root.setLevel(level)
+    for h in root.handlers:
+        h.setLevel(level)
+    for name in (
+        "mcp",
+        "mcp.server",
+        "mcp.server.fastmcp",
+        "mcp.server.lowlevel",
+        "mcp.server.lowlevel.server",
+        "mcp-pg",
+    ):
+        log = logging.getLogger(name)
+        log.setLevel(level)
+        for h in log.handlers:
+            h.setLevel(level)
+    for name in list(logging.Logger.manager.loggerDict):
+        if isinstance(name, str) and (name == "mcp" or name.startswith("mcp.")):
+            log = logging.getLogger(name)
+            log.setLevel(level)
+            for h in log.handlers:
+                h.setLevel(level)
+
+
+_silence_mcp_info_logs()
+logger = logging.getLogger("mcp-pg")
 mcp = FastMCP("postgres-explorer")
+_silence_mcp_info_logs()
 
 
 def _dsn() -> str:
@@ -492,5 +529,7 @@ def _parse_args() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = _parse_args()
-    logger.info("Starting PostgreSQL MCP server with transport=%s", args.transport)
+    _silence_mcp_info_logs()
+    if _debug:
+        logger.info("Starting PostgreSQL MCP server with transport=%s", args.transport)
     mcp.run(transport=args.transport)
